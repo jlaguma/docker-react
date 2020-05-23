@@ -14,4 +14,4 @@ before_install:
 # NOTE: default npm run test does not exit like Travis is expecting
 # NOTE: it waits for input. to deal with that we add "-- --coverage"
 script:
-    - docker run d0minar/docker-react npm run test -- --coverage
+    - docker run -e CI=true d0minar/docker-react npm run test -- --coverage
