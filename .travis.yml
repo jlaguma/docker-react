@@ -15,3 +15,18 @@ before_install:
 # NOTE: it waits for input. to deal with that we add "-- --coverage"
 script:
     - docker run -e CI=true d0minar/docker-react npm run test -- --coverage
+
+# NOTE: get region from the beanstalk url that you get for your app
+# NOTE: look up bucket_name in S3 section of AWS, look for elasticbeanstalk-eu-west-2
+deploy:
+    provider: elasticbeanstalk
+    region: "eu-west-2"
+    app: "docker-react"
+    env: "DockerReact-env"
+    bucket_name: "elasticbeanstalk-eu-west-2-657270835947"
+    bucket_path: "docker-react"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: "$AWS_SECRET_KEY"
