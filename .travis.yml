@@ -1,0 +1,17 @@
+# we need to tell Travis that sudo is needed
+sudo: required
+# Travis needs to know that we will be using docker
+services:
+    - docker
+
+# build our stuff so we can do testing
+before_install:
+    - docker build -t d0minar/docker-react -f Dockerfile.dev .
+
+# commands we want Travis to run to do out testing
+# Travis will watch those and if command returns
+# anything other than 0, it will count it as failed
+# NOTE: default npm run test does not exit like Travis is expecting
+# NOTE: it waits for input. to deal with that we add "-- --coverage"
+script:
+    - docker run d0minar/docker-react npm run test -- --coverage
